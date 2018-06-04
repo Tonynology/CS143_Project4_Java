@@ -83,7 +83,7 @@ public class Huffman
 
             if (fileObject.exists() && fileObject.canRead()) {
                 fileName = fileObject.getName().trim();
-//                ArrayEachLine.fileArrayList(fileObject);
+//                
             } else {    // if fileObject doesn't exist & can't read
                 TextFileScanner(name, fileObject);
             }
@@ -136,8 +136,7 @@ public class Huffman
                 name = fileObject.getName().trim(); 
                 //put it in array each line
 //                ArrayEachLine.fileArrayList(fileObject); 
-//                Project1_CS143.fileObject = fileObject;
-//                Project1_CS143.name = name;
+//               
             }
         } while (!fileObject.exists() || !fileObject.canRead());
 //-----------------------------------------------------------------------------        
