@@ -77,22 +77,23 @@ public class Huffman
      */
     public void encode(String fileName)
     {
-      // YOUR CODE HERE
-        fileObject = new File(fileName);
-        name = fileName;
+             Scanner fileInputScanner;
 
-            if (fileObject.exists() && fileObject.canRead()) {
-                fileName = fileObject.getName().trim();
-//                
-            } else {    // if fileObject doesn't exist & can't read
-                TextFileScanner(name, fileObject);
+        try {
+            getFileDirectory();
+            fileInputScanner = new Scanner(fileObject);
+            fileInputScanner.useDelimiter("\n");
+            while (fileInputScanner.hasNextLine()) {
+                
             }
-
- System.out.println(theTree);
+            fileInputScanner.close();
+        } catch (Exception ex) {
+            System.out.println("There was an error.");
+        }
 
         writeEncodedFile(byteArray, fileName);
         writeKeyFile(fileName);
-    } 
+    }
  
     /*
      * decode
@@ -122,37 +123,19 @@ public class Huffman
     {
   
     }
-
-    private void TextFileScanner(String name, File fileObject) {
-       Scanner keyboard = new Scanner(System.in);
-        do {
-            JFileChooser chooser = new JFileChooser();
-            chooser.setCurrentDirectory(
-                    fileObject.getAbsoluteFile().getParentFile());
-            int returnVal = chooser.showOpenDialog(null);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                fileObject = chooser.getSelectedFile(); //choose file
-                //get file name from chosen file
-                name = fileObject.getName().trim(); 
-                //put it in array each line
-//                ArrayEachLine.fileArrayList(fileObject); 
-//               
-            }
-        } while (!fileObject.exists() || !fileObject.canRead());
-//-----------------------------------------------------------------------------        
-        //if file cannot read or doesn't exist
-        while ((!fileObject.exists()) || (!fileObject.canRead())) {
-            if (!fileObject.exists()) {
-                System.out.println("No such file");
-            } else // ! fileObject.canRead( )
-            {
-                System.out.println("That file is not readable.");
-            }
-            System.out.println("Enter file name again:");
-            name = keyboard.next();
-            fileObject = new File(name);
+    public void getFileDirectory() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(
+                fileObject.getAbsoluteFile().getParentFile());
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            fileObject = chooser.getSelectedFile();
+            fileName = fileObject.getName().trim();
+            JOptionPane.showMessageDialog(null, "Done!"
+                    + " The file has been copied and modified!", "Info",
+                    JOptionPane.PLAIN_MESSAGE);
         }
     }
- 
+
 }
 
