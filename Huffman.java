@@ -24,8 +24,9 @@ public class Huffman
     private SortedMap<String, Character> codeMap;
     HuffmanChar[] charCountArray;
     byte[] saveDataArray;
-    public static File fileObject = null;
-    public static String name = "x";
+    int[] charCount = new int[128];
+    public static String fileName = "x";
+    public static File fileObject = new File("");
     
     /**
      * Creates a new instance of Main
@@ -75,20 +76,27 @@ public class Huffman
      * encode
      * @param fileName the file to encode
      */
-    public void encode(String fileName)
-    {
-             Scanner fileInputScanner;
+    public void encode(String fileName) {
+        Scanner fileInputScanner;
+        String temp;
 
         try {
             getFileDirectory();
             fileInputScanner = new Scanner(fileObject);
             fileInputScanner.useDelimiter("\n");
             while (fileInputScanner.hasNextLine()) {
+                temp = fileInputScanner.nextLine() + "\n";
                 
+                for (int i = 0; i < temp.length(); i++) {
+                    charCount[(int) temp.charAt(i)]++;
+                }
+                
+                
+                count++;
             }
             fileInputScanner.close();
         } catch (Exception ex) {
-            System.out.println("There was an error.");
+            System.out.println("There was an error");
         }
 
         writeEncodedFile(byteArray, fileName);
@@ -123,17 +131,22 @@ public class Huffman
     {
   
     }
+    
     public void getFileDirectory() {
         JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(
-                fileObject.getAbsoluteFile().getParentFile());
-        int returnVal = chooser.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            fileObject = chooser.getSelectedFile();
-            fileName = fileObject.getName().trim();
-            JOptionPane.showMessageDialog(null, "Done!"
-                    + " The file has been copied and modified!", "Info",
-                    JOptionPane.PLAIN_MESSAGE);
+        while (!fileObject.exists()) {
+            chooser.setCurrentDirectory(
+                    fileObject.getAbsoluteFile().getParentFile());
+            int returnVal = chooser.showOpenDialog(null);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                fileObject = chooser.getSelectedFile();
+                fileName = fileObject.getName().trim();
+                JOptionPane.showMessageDialog(null, "Done!"
+                        + " The file has been copied and modified!", "Info",
+                        JOptionPane.PLAIN_MESSAGE);
+            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
+                System.exit(0);
+            }
         }
     }
 
