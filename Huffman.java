@@ -95,6 +95,9 @@ public class Huffman
                 count++;
             }
             fileInputScanner.close();
+            //now we have to sort the data by count, but the instruction said
+            // "It should be put into an array holding a class designed to hold that data."
+            // Anyone has idea for this? HashMap?
         } catch (Exception ex) {
             System.out.println("There was an error");
         }
