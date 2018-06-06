@@ -26,6 +26,7 @@ public class Huffman {
     private SortedMap<String, Character> codeMap;
     HuffmanChar[] charCountArray;
     int[] saveDataArray;
+    int [] frequencyArray;
     public static String fileName;
     public static File fileObject;
 
@@ -143,6 +144,29 @@ public class Huffman {
             }
         }
         System.out.println(keyMap);
+    }
+    
+    /**
+     * createFrequencyArray
+     * creates an array of integers that tallies the number of character frequencies
+     * using ASCII as an index for each character.
+     */
+    public void createFrequencyArray()
+    {
+        frequencyArray = new int[128];
+        
+        for(String line:fileArray)
+        {
+            for(int i =0; i<line.length();i++)
+            {
+                int freq = (int)line.charAt(i);
+                frequencyArray[freq]++;
+            }
+            // New line character for each line
+            frequencyArray['\n']++;
+        }
+        // bell character for end of text.
+        frequencyArray['\b']++;
     }
 
     public void getFileDirectory() {
