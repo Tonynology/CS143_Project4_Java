@@ -3,18 +3,20 @@
  *
  * Created on May 21, 2007, 1:01 PM
  */
-
 package huffman;
+
 import java.util.*;
 import java.lang.*;
 import java.io.*;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author pbladek
  */
-public class Huffman
-{  
+public class Huffman {
+
     public static final int CHARMAX = 128;
     public static final byte CHARBITS = 7;
     public static final short CHARBITMAX = 128;
@@ -23,22 +25,29 @@ public class Huffman
     private SortedMap<Character, String> keyMap;
     private SortedMap<String, Character> codeMap;
     HuffmanChar[] charCountArray;
-    byte[] saveDataArray;
-    int[] charCount = new int[128];
-    public static String fileName = "x";
-    public static File fileObject = new File("");
-    
+    int[] saveDataArray;
+    public static String fileName;
+    public static File fileObject;
+
     /**
      * Creates a new instance of Main
      */
-    public Huffman() {}
-    
+    public Huffman() {
+        theTree = new HuffmanTree<Character>();
+        keyMap = new TreeMap<>();
+        codeMap = new TreeMap();
+        saveDataArray = new int[128];
+        byteArray = new byte[128];
+        fileName = "x";
+        fileObject = new File("");
+    }
+
     /**
      * main
+     *
      * @param args the command line arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
 //----------------------------------------------------
 // used for debugging encoding
 //----------------------------------------------------
@@ -51,25 +60,25 @@ public class Huffman
 //        args[0] = "-d";
 //        args[1] = "alice.txt";  
 //----------------------------------------------------        
+
         boolean decode = false;
         String textFileName = "";
-        if(args.length > 0)
-        {
-            if(args[0].substring(0,2).toLowerCase().equals("-d"))
-            {
+        if (args.length > 0) {
+            if (args[0].substring(0, 2).toLowerCase().equals("-d")) {
                 decode = true;
-                if(args.length > 1)
+                if (args.length > 1) {
                     textFileName = args[1];
-            }
-            else
+                }
+            } else {
                 textFileName = args[0];
+            }
         }
         Huffman coder = new Huffman();
-        if(!decode)
+        if (!decode) {
             coder.encode(textFileName);
-        else
+        } else {
             coder.decode(textFileName);
-       
+        }
     }
 
     /*
@@ -86,18 +95,12 @@ public class Huffman
             fileInputScanner.useDelimiter("\n");
             while (fileInputScanner.hasNextLine()) {
                 temp = fileInputScanner.nextLine() + "\n";
-                
                 for (int i = 0; i < temp.length(); i++) {
-                    charCount[(int) temp.charAt(i)]++;
+                    saveDataArray[(int) temp.charAt(i)]++;
                 }
-                
-                
-                count++;
             }
             fileInputScanner.close();
-            //now we have to sort the data by count, but the instruction said
-            // "It should be put into an array holding a class designed to hold that data."
-            // Anyone has idea for this? HashMap?
+            saveCharData();
         } catch (Exception ex) {
             System.out.println("There was an error");
         }
@@ -105,36 +108,43 @@ public class Huffman
         writeEncodedFile(byteArray, fileName);
         writeKeyFile(fileName);
     }
- 
+
     /*
      * decode
      * @param inFileName the file to decode
-     */   
-    public void decode(String inFileName)
-    { 
-     
-    }
-      
-    /**
-     * writeEncodedFile
-     * @param bytes bytes for file
-     * @param fileName file input
-     */ 
-    public void writeEncodedFile(byte[] bytes, String fileName)
-    {
-      
+     */
+    public void decode(String inFileName) {
 
     }
-   
+
+    /**
+     * writeEncodedFile
+     *
+     * @param bytes bytes for file
+     * @param fileName file input
+     */
+    public void writeEncodedFile(byte[] bytes, String fileName) {
+
+    }
+
     /**
      * writeKeyFile
+     *
      * @param fileName the name of the file to write to
      */
-    public void writeKeyFile(String fileName)
-    {
-  
+    public void writeKeyFile(String fileName) {
+
     }
-    
+
+    public void saveCharData() {
+        for (int i = 0; i < saveDataArray.length; i++) {
+            if (saveDataArray[i] > 0) {
+                keyMap.put((char) i, String.valueOf(saveDataArray[i]));
+            }
+        }
+        System.out.println(keyMap);
+    }
+
     public void getFileDirectory() {
         JFileChooser chooser = new JFileChooser();
         while (!fileObject.exists()) {
@@ -152,6 +162,4 @@ public class Huffman
             }
         }
     }
-
 }
-
