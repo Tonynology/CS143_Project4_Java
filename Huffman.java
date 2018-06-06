@@ -168,6 +168,31 @@ public class Huffman {
         // bell character for end of text.
         frequencyArray['\b']++;
     }
+    
+     public void charFrequencyArray()
+    {
+        //arraylist to store the values from frequencyArray
+        ArrayList<HuffmanChar> huffList = new ArrayList<HuffmanChar>(); 
+        //goes through the frequencyArray and checks for values greater than 0
+        for(int i =0;i<frequencyArray.length;i++)
+        {
+            if(frequencyArray[i] > 0)
+            {
+                //cast i to the char because ascii.
+                HuffmanChar huffChar = new HuffmanChar((char)i, frequencyArray[i]);
+                //add to arraylist
+                huffList.add(huffChar);
+            }
+            
+        }
+        //sorts the arraylist
+        Collections.sort(huffList);
+
+        //stores the arraylist values into charCount Array
+        charCountArray = new HuffmanChar[huffList.size()];
+        huffList.toArray(charCountArray);
+
+    }
 
     public void getFileDirectory() {
         JFileChooser chooser = new JFileChooser();
