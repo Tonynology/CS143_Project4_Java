@@ -26,7 +26,6 @@ public class Huffman {
     private SortedMap<String, Character> codeMap;
     HuffmanChar[] charCountArray;
     int[] saveDataArray;
-    int [] frequencyArray;
     public static String fileName;
     public static File fileObject;
 
@@ -138,60 +137,28 @@ public class Huffman {
     }
 
     public void saveCharData() {
+
+        charFrequencyArray();
+
         for (int i = 0; i < saveDataArray.length; i++) {
             if (saveDataArray[i] > 0) {
-                keyMap.put((char) i, String.valueOf(saveDataArray[i]));
+                //keyMap.put(charCountArray, );
             }
         }
-        System.out.println(keyMap);
     }
-    
-    /**
-     * createFrequencyArray
-     * creates an array of integers that tallies the number of character frequencies
-     * using ASCII as an index for each character.
-     */
-    public void createFrequencyArray()
-    {
-        frequencyArray = new int[128];
-        
-        for(String line:fileArray)
-        {
-            for(int i =0; i<line.length();i++)
-            {
-                int freq = (int)line.charAt(i);
-                frequencyArray[freq]++;
-            }
-            // New line character for each line
-            frequencyArray['\n']++;
-        }
-        // bell character for end of text.
-        frequencyArray['\b']++;
-    }
-    
-     public void charFrequencyArray()
-    {
-        //arraylist to store the values from frequencyArray
-        ArrayList<HuffmanChar> huffList = new ArrayList<HuffmanChar>(); 
-        //goes through the frequencyArray and checks for values greater than 0
-        for(int i =0;i<frequencyArray.length;i++)
-        {
-            if(frequencyArray[i] > 0)
-            {
-                //cast i to the char because ascii.
-                HuffmanChar huffChar = new HuffmanChar((char)i, frequencyArray[i]);
-                //add to arraylist
+
+    public void charFrequencyArray() {
+        ArrayList<HuffmanChar> huffList = new ArrayList<HuffmanChar>();
+        for (int i = 0; i < saveDataArray.length; i++) {
+            if (saveDataArray[i] > 0) {
+                HuffmanChar huffChar = new HuffmanChar((char) i, saveDataArray[i]);
                 huffList.add(huffChar);
             }
-            
         }
-        //sorts the arraylist
         Collections.sort(huffList);
-
-        //stores the arraylist values into charCount Array
         charCountArray = new HuffmanChar[huffList.size()];
         huffList.toArray(charCountArray);
-
+        System.out.println(Arrays.toString(charCountArray));
     }
 
     public void getFileDirectory() {
