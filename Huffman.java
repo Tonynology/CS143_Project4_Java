@@ -114,7 +114,96 @@ public class Huffman {
      * @param inFileName the file to decode
      */
     public void decode(String inFileName) {
+       // takes in .cod file
+        String codFileName = inFileName.substring(0,
+                inFileName.lastIndexOf('.')).concat(".cod");
+        File codFile = new File(codFileName);
+        if (!codFile.exists()) {
+            throw new IOException(".cod file does not exist");
+        }
+        FileInputStream codInstream = new FileInputStream(codFile);
+        BufferedInputStream codFin = new BufferedInputStream(codInstream);
+        byte in[] = new byte[3];
+        // first read HuffmanChar elements into an ArrayList
+        ArrayList<HuffmanChar> huffData = new ArrayList<>();
+        while (codFin.available() >= 3) {
+            // read 3 bytes into buffer
+            codFin.read(in);
+            // covert the 3 bytes to a HuffmanChar
+            HuffmanChar huffChar = new HuffmanChar(in);
+            // store int array
+            huffData.add(huffChar);
+        }
+        // convert ArrayList into HuffmanChar []
+        charCountArray = new HuffmanChar[2];
+        charCountArray = huffData.toArray(charCountArray);
 
+        //  huffman tree and tree maps
+        theTree = new HuffmanTree(charCountArray);
+        keyMap = theTree.getKeyMap();
+
+        //  .huf file
+        String hufFileName = inFileName.substring(0,
+                inFileName.lastIndexOf('.')).concat(".huf");
+        File inputFile = new File(hufFileName);
+        if (!inputFile.exists()) {
+            throw new IOException("input .huf file does not exist");
+        }
+        FileInputStream finstream = new FileInputStream(inputFile);
+        BufferedInputStream fin = new BufferedInputStream(finstream);
+
+        // create output file (.dec.txt)
+        String decodeFileName = inFileName.substring(0,
+                inFileName.lastIndexOf('.')).concat(".dec.txt");
+        File decodeFileWriter = new File(decodeFileName);
+        if (decodeFileWriter.exists()) {
+            decodeFileWriter.delete();
+        }
+        FileWriter fWriter = new FileWriter(decodeFileWriter, true);
+        BufferedWriter fout = new BufferedWriter(fWriter);
+        //might need to add a space between the printing out
+        //System.out.println();
+        //decode the .huf file, write to .dec.txt
+        Character value = '\0';
+        String code = "";
+        boolean done = false;
+        while (!done) {
+            // read one byte from .huf file
+            char inValue = (char) fin.read(); // 6/7: changed byte to char
+            // -1 is the end of the file
+            if (inValue == -1) {
+                System.out.println("-1: end of .huf file");
+                done = true;
+                break;
+            }
+            for (int i = 0; i < NUM_BITS; i++) {
+                if ((0x80 & inValue) == 0x80) {
+                    code = code.concat("1");
+                } else {
+                    code = code.concat("0");
+                }
+                // left bit shift
+                inValue <<= 1;
+                // is there a match?]
+                value = keyMap.get(code);
+                if (value != null) {
+                    if (value == '\b') {
+                        System.out.println("EOF marker");
+                        done = true;
+                        break;
+                    } else {
+                        fout.write(value);
+                        code = "";
+                                    }
+                                }
+                            }
+                        }
+                fin.close();
+                fout.close();
+        
+        System.out.println(hufFileName + " converted to "
+                                       + decodeFileName + "."); 
+       
     }
 
     /**
