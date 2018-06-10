@@ -35,7 +35,24 @@ public class HuffmanTree<T extends Comparable<? super T>>
     public HuffmanTree(HuffmanData<T>[] dataArray) 
     {
         // your code here
+        ArrayList<BinaryNode<HuffmanData<T>>> nodeList = new ArrayList();
+    
 
+
+
+        for (HuffmanData<T> item : dataArray) {
+                nodeList.add(new BinaryNode(item));
+        }
+        while (nodeList.size() > 1)
+        {
+                clear();
+                add((BinaryNode)nodeList.remove(0), (BinaryNode)nodeList.remove(0));
+                int i = 0;
+      
+                while ((i < nodeList.size()) && (((HuffmanData)((BinaryNode)nodeList.get(i)).getData()).compareTo((HuffmanData)getRootData()) < 0))
+                        i++;
+                nodeList.add(i, (BinaryNode)getRootNode());
+        }
 
 
         
@@ -80,7 +97,11 @@ public class HuffmanTree<T extends Comparable<? super T>>
      */
      private void add(HuffmanData<T> element1)
      {
-
+          HuffmanTree<T> leftTree = new HuffmanTree();
+          leftTree.setRootNode(left);
+          HuffmanTree<T> rightTree = new HuffmanTree();
+          rightTree.setRootNode(right);
+          setTree(new HuffmanData(MARKER, ((HuffmanData)left.getData()).getOccurances() + ((HuffmanData)right.getData()).getOccurances()), leftTree, rightTree);
        
      }
     
@@ -92,7 +113,26 @@ public class HuffmanTree<T extends Comparable<? super T>>
      private void setMaps(BinaryNodeInterface<HuffmanData<T>> node,
              String codeString)
      { 
-       
+       if (node == null)
+          return;
+       if (codeString == null)
+          codeString = "";
+       if (((HuffmanData)node.getData()).getData() != null)
+       {
+           codeMap.put(((HuffmanData)node.getData()).getData(), codeString);
+           keyMap.put(codeString, ((HuffmanData)node.getData()).getData());
+           leafCount += 1;
+           return;
+       }
+    
+       if (node.hasLeftChild())
+       {
+           setCodeMaps(node.getLeftChild(), codeString + "0");
+       }
+       if (node.hasRightChild())
+       {
+          setCodeMaps(node.getRightChild(), codeString + "1");
+       }
               
      }
     
