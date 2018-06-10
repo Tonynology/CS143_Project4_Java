@@ -213,7 +213,22 @@ public class Huffman {
      * @param fileName file input
      */
     public void writeEncodedFile(byte[] bytes, String fileName) {
-
+        String codeFileName = fileName.substring(0, fileName.indexOf(".")) + ".huf";
+    
+    ObjectOutputStream outputStream = null;
+    try
+    {
+      outputStream = new ObjectOutputStream(new FileOutputStream(codeFileName));
+      
+      outputStream.write(bytes);
+      outputStream.close();
+    }
+    catch (IOException e)
+    {
+      System.out.println("Could not open file" + codeFileName + " " + e.toString());
+    }
+    
+    return new File(codeFileName);
     }
 
     /**
@@ -222,7 +237,29 @@ public class Huffman {
      * @param fileName the name of the file to write to
      */
     public void writeKeyFile(String fileName) {
-
+        String codeFileName = fileName.substring(0, fileName.indexOf(".")) + ".cod";
+    
+    ObjectOutputStream outputStream = null;
+    saveDataArray = new byte[charCountArray.length * 3];
+    for (int i = 0; i < charCountArray.length; i++)
+    {
+      byte[] threeBytes = charCountArray[i].toThreeBytes();
+      saveDataArray[(3 * i)] = threeBytes[0];
+      saveDataArray[(3 * i + 1)] = threeBytes[1];
+      saveDataArray[(3 * i + 2)] = threeBytes[2];
+    }
+    try
+    {
+      outputStream = new ObjectOutputStream(new FileOutputStream(codeFileName));
+      
+      for (int i = 0; i < saveDataArray.length; i++)
+        outputStream.writeByte(saveDataArray[i]);
+      outputStream.close();
+    }
+    catch (IOException e)
+    {
+      System.out.println("Could not open file " + codeFileName + e.getClass() + e.toString());
+    }
     }
 
     public void saveCharData() {
