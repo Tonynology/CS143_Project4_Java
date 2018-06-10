@@ -13,9 +13,9 @@ import java.text.DecimalFormat;
  * This class encodes (compresses) and decodes (decompresses) ASCII text files
  * using the Huffman compression algorithm and data structures.<br>
  * File name of text file to encode can be entered from the command line.<br>
- *      alice.txt<br>
- * File name of file to decode can be entered from the command line with the
- * -d option parameter. -d alice.huf (or) -d alice.txt<br>
+ * alice.txt<br>
+ * File name of file to decode can be entered from the command line with the -d
+ * option parameter. -d alice.huf (or) -d alice.txt<br>
  * If no file name is entered from the command line, the user is prompted for
  * the file.<br>
  * <pre>
@@ -24,13 +24,13 @@ import java.text.DecimalFormat;
  *    Output - encoded file (alice.huf), huffman data file (alice.cod)
  *       Name of encoded file and compression ratio is written to stdout.
  * Decoding - must add -d option argument from the command line
- *    Input  - file name of encoded file (alice.huf or alice.txt). Compression 
+ *    Input  - file name of encoded file (alice.huf or alice.txt). Compression
  * data file must also be present (alice.cod).
  *    Output - decoded file (alice.dec.txt)
  * </pre>
- * 
+ *
  * @author Tommy Tran
- * @version 1.0 6/9/18 Test Environment: NetBeans 8.2 
+ * @version 1.0 6/9/18 Test Environment: NetBeans 8.2
  */
 public class Huffman {
 
@@ -44,6 +44,7 @@ public class Huffman {
     ArrayList<String> fileArray;
     int[] frequencyArray;
     static boolean decode = false;
+
     /**
      * Creates a new instance of main
      */
@@ -68,11 +69,11 @@ public class Huffman {
 //        args[0] = "-d";
 //        args[1] = "alice.txt";
 //----------------------------------------------------        
-        try {            
+        try {
             String textFileName = "";
             if (args.length > 0) {
                 if (args[0].substring(0,
-                                    2).toLowerCase().equalsIgnoreCase("-d")) {
+                        2).toLowerCase().equalsIgnoreCase("-d")) {
                     decode = true;
                     if (args.length > 1) {
                         textFileName = args[1];
@@ -84,8 +85,8 @@ public class Huffman {
             textFileName = checkFileValidity(textFileName);
             Huffman coder = new Huffman();
             if (!decode) {
-                if ( textFileName.substring(textFileName.lastIndexOf('.')
-                                                ).equalsIgnoreCase(".huf") ) {
+                if (textFileName.substring(textFileName.lastIndexOf('.')
+                ).equalsIgnoreCase(".huf")) {
                     throw new Exception("cannot encode a .huf file");
                 }
                 coder.encode(textFileName);
@@ -108,6 +109,7 @@ public class Huffman {
      * entry - text file
      * exit - compressed file (.huf extension)
      *        frequency data needed for decode (.cod extension)</pre>
+     *
      * @param fileName the file to encode
      * @throws IOException if error reading or writing to a file
      * @throws Exception if keyCode cannot find a match; passes through
@@ -117,7 +119,7 @@ public class Huffman {
         int numCharsInputFile = 0;
         int numBytesOutputFile = 0;
         String inLine = "";
-        
+
         // create new output (.huf) file name
         String newOutName = fileName.substring(0,
                 fileName.lastIndexOf('.')).concat(".huf");
@@ -129,7 +131,7 @@ public class Huffman {
         // create buffered output stream for output file
         FileOutputStream outstream = new FileOutputStream(fileOut);
         BufferedOutputStream fout = new BufferedOutputStream(outstream);
-        
+
         // create File reference for input file
         File inFile = new File(fileName);
         // safety check - should be valid when passed to method
@@ -204,7 +206,7 @@ public class Huffman {
         }
         fout.close();
         fin.close();
-        
+
         // print compression ratio to stdout
         float compression
                 = ((float) numBytesOutputFile / (float) numCharsInputFile) * 100;
@@ -218,7 +220,8 @@ public class Huffman {
     /**
      * decode (decompress) a huffman encoded file<br>
      * entry - .huf encoded file<br>
-     * exit  - decoded file with .dec.txt extension<br>
+     * exit - decoded file with .dec.txt extension<br>
+     *
      * @param inFileName the file to decode
      * @throws IOException if error reading or writing to a file
      */
@@ -318,7 +321,7 @@ public class Huffman {
      * Data is used when decoding the file.
      *
      * @param fileName the name of the file to write to (after adding .cod)
-     * @throws IOException if error writing to file
+     * @throws IOException if error writing to file6-d
      */
     public void writeKeyFile(String fileName) throws IOException {
         // create new (.cod) file name
@@ -341,8 +344,8 @@ public class Huffman {
 
     /**
      * checkFileValidity checks for existence of user-entered file. If no file
-     * name entered, or if the entered file does not exist, then prompt the
-     * user up to 5 times for a file name.
+     * name entered, or if the entered file does not exist, then prompt the user
+     * up to 5 times for a file name.
      *
      * @param fileName name of the user entered file, empty string if no name
      * entered on command line
@@ -363,31 +366,34 @@ public class Huffman {
 
         // give the user 5 attempts to enter a correct file name
         Scanner scn = new Scanner(System.in);
-        int attempts = 0;
-        while (attempts < 5) {
+        boolean again = true;
+        while (again) {
             System.out.print("Enter file name with extension please: ");
             fileName = scn.nextLine();
-            if (fileName.length() > 0) {
-                if (fileName.substring(0,
-                                    2).toLowerCase().equalsIgnoreCase("-d")) {
-                    decode = true;
-                    if (fileName.length() > 1) {
-                        fileName = fileName.substring(3, fileName.length());
+            if (fileName.endsWith(".txt") || fileName.endsWith(".cod") || fileName.endsWith(".huf")) {
+                if (fileName.length() > 0) {
+                    if (fileName.substring(0,
+                            2).toLowerCase().equalsIgnoreCase("-d")) {
+                        decode = true;
+                        if (fileName.length() > 1) {
+                            fileName = fileName.substring(3, fileName.length());
+                        }
+                    } else {
+                        fileName = fileName.substring(0, fileName.length());
                     }
+                }
+
+                File secondFile = new File(fileName);
+                if (secondFile.exists()) {
+                    again = false;
+                    return fileName;
                 } else {
-                    fileName = fileName.substring(0, fileName.length());
+                    System.out.println("File '" + fileName + "' not found.");
                 }
             }
-            
-            File secondFile = new File(fileName);
-            if (secondFile.exists()) {
-                return fileName;
-            } else {
-                System.out.println("File '" + fileName + "' not found.");
-                attempts++;
-            }
+            System.out.println("Invalid Text File!");
+            continue;
         }
-        
         throw new IOException("File Not Found");
     }
 
@@ -413,6 +419,7 @@ public class Huffman {
     /**
      * createFrequencyArray creates an array of integers that tallies the number
      * of character frequencies using ASCII as an index for each character.
+     *
      * @throws Exception if a byte encountered with high bit set (valid ASCII
      * files never have the high bit set)
      */
@@ -435,8 +442,8 @@ public class Huffman {
 
     /**
      * charFrequencyArray<br>
-     * creates an arraylist to store the frequencies from the frequencyArray
-     * and to sort them. The arraylist is then sorted and stored in global
+     * creates an arraylist to store the frequencies from the frequencyArray and
+     * to sort them. The arraylist is then sorted and stored in global
      * charCountArray
      */
     public void charFrequencyArray() {
