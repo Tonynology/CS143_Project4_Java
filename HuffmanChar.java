@@ -5,8 +5,10 @@
 package huffman;
 import java.io.*;
 /**
- *
- * @author pbladek
+ * class for read character of Huffman Code.<br>
+ * 
+ * @author Tommy Tran, Danhiel T VU, TaeHoon Moon, Quan Dinh Tran 
+ * @version 1.0 6/9/18 Test Environment: NetBeans 8.2 
  */
 public class HuffmanChar extends HuffmanData<Character>
         implements Serializable
