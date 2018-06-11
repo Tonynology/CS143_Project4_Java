@@ -362,31 +362,34 @@ public class Huffman {
 
         // give the user 5 attempts to enter a correct file name
         Scanner scn = new Scanner(System.in);
-        int attempts = 0;
-        while (attempts < 5) {
+        boolean again = true;
+        while (again) {
             System.out.print("Enter file name with extension please: ");
             fileName = scn.nextLine();
-            if (fileName.length() > 0) {
-                if (fileName.substring(0,
-                                    2).toLowerCase().equalsIgnoreCase("-d")) {
-                    decode = true;
-                    if (fileName.length() > 1) {
-                        fileName = fileName.substring(3, fileName.length());
+            if (fileName.endsWith(".txt") || fileName.endsWith(".cod") || fileName.endsWith(".huf")) {
+                if (fileName.length() > 0) {
+                    if (fileName.substring(0,
+                            2).toLowerCase().equalsIgnoreCase("-d")) {
+                        decode = true;
+                        if (fileName.length() > 1) {
+                            fileName = fileName.substring(3, fileName.length());
+                        }
+                    } else {
+                        fileName = fileName.substring(0, fileName.length());
                     }
+                }
+
+                File secondFile = new File(fileName);
+                if (secondFile.exists()) {
+                    again = false;
+                    return fileName;
                 } else {
-                    fileName = fileName.substring(0, fileName.length());
+                    System.out.println("File '" + fileName + "' not found.");
                 }
             }
-            
-            File secondFile = new File(fileName);
-            if (secondFile.exists()) {
-                return fileName;
-            } else {
-                System.out.println("File '" + fileName + "' not found.");
-                attempts++;
-            }
+            System.out.println("Invalid Text File!");
+            continue;
         }
-        
         throw new IOException("File Not Found");
     }
 
