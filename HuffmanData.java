@@ -8,7 +8,12 @@ package huffman;
 import java.lang.*;
 
 /**
- * @author pbladek
+ * HuffmanData
+ * 
+ * HuffmanData for Huffman Coding.<br>
+ * 
+ * @author Tommy Tran, Danhiel T VU, TaeHoon Moon, Quan Dinh Tran 
+ * @version 1.0 6/9/18 Test Environment: NetBeans 8.2 
  */
 public class HuffmanData<T extends Comparable<? super T>>
         implements Comparable<HuffmanData<T>>
@@ -39,8 +44,8 @@ public class HuffmanData<T extends Comparable<? super T>>
         occurances = count;   
     }
     
-    /*
-     * accessor
+    /**
+     * accessors
      * @return data
      */
     public T getData()
@@ -48,8 +53,8 @@ public class HuffmanData<T extends Comparable<? super T>>
         return data;
     }
     
-    /*
-     * accessor
+    /**
+     * accessors
      * @return occurances
      */
     public int getOccurances()
@@ -58,7 +63,7 @@ public class HuffmanData<T extends Comparable<? super T>>
     }
     
     /**
-     *
+     * compare the value of HuffmanData
      * @param o the other HuffmanData
      * @return -1 if <, 0 if ==, 1 if >
      */
@@ -69,7 +74,8 @@ public class HuffmanData<T extends Comparable<? super T>>
                 : (occurances == o.occurances)? 0 : 1;
     }
     
-    /*
+    /**
+     * Show as String
      * @return strng version of class
      */
     public String toString()
