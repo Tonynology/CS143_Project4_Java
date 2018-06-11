@@ -5,7 +5,11 @@
 package huffman;
 import java.util.*;
 /**
- * Binary tree for Huffman coding.
+ * HuffmanTree
+ * 
+ * Binary tree for Huffman coding.<br>
+ * 
+ * @author Tommy Tran, Danhiel T VU, TaeHoon Moon, Quan Dinh Tran 
  * @version 1.0 6/9/18 Test Environment: NetBeans 8.2 
  */
 public class HuffmanTree<T extends Comparable<? super T>>
@@ -179,7 +183,7 @@ public class HuffmanTree<T extends Comparable<? super T>>
      }
     
     /**
-     * accessor for codeMap
+     * accessors for codeMap
      * @return codeMap
      */
     public SortedMap<T, String> getCodeMap()
@@ -188,7 +192,7 @@ public class HuffmanTree<T extends Comparable<? super T>>
     }
     
     /**
-     * accessor for keyMap
+     * accessors for keyMap
      * @return keyMap
      */
     public SortedMap<String, T> getKeyMap()
