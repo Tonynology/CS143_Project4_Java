@@ -8,8 +8,10 @@ package huffman;
 import java.io.*;
 /**
  * class for saving the initial sorted array
- *  of data/occurances
- * @author pbladek
+ *  of data.<br>
+ * 
+ * @author Tommy Tran, Danhiel T VU, TaeHoon Moon, Quan Dinh Tran 
+ * @version 1.0 6/9/18 Test Environment: NetBeans 8.2 
  */
 public class SaveData implements Serializable
 {
@@ -21,9 +23,10 @@ public class SaveData implements Serializable
      */
     public SaveData() {}
     
-    /** Creates a new instance of SaveDate
+    /** 
+     * Creates a new instance of SaveDate
      * @param c the data char
-     * @param o the number of occurances
+     * @param o the number of occurrences
      */
     public SaveData(char c, short o)
     {
@@ -32,7 +35,7 @@ public class SaveData implements Serializable
     }
 
     /**
-     * accessor for data
+     * accessors
      * @return data
      */
     public char getData()
@@ -41,7 +44,7 @@ public class SaveData implements Serializable
     }
 
     /**
-     * accessor for occurrances
+     * accessors
      * @return data
      */
     public short getOccurrances()
@@ -49,6 +52,7 @@ public class SaveData implements Serializable
         return occurrances;
     }
     /**
+     * Show as String
      * @return a string version of this class
      */
     @Override
