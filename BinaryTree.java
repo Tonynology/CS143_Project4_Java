@@ -8,7 +8,10 @@ package huffman;
 import java.util.*;
 
 /**
- * @author Carrano
+ * class for read binary tree of Huffman Code.<br>
+ * 
+ * @author Tommy Tran, Danhiel T VU, TaeHoon Moon, Quan Dinh Tran 
+ * @version 1.0 6/9/18 Test Environment: NetBeans 8.2 
  */
 public class BinaryTree<T> implements BinaryTreeInterface<T> ,
     java.io.Serializable
@@ -36,7 +39,7 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> ,
      * constructor
      * @param rootData data for root node
      * @param leftTree left subtree to attach
-     * @param leftTree right subtree to attach
+     * @param rightTree right subtree to attach
      */
     public BinaryTree (T rootData, BinaryTree<T> leftTree,
             BinaryTree<T> rightTree)
@@ -48,6 +51,7 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> ,
      * sets the root node
      * @param rootData data for root node
      */
+    @Override
     public void setTree (T rootData)
     {
         root = new BinaryNode < T > (rootData);
@@ -59,6 +63,7 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> ,
      * @param leftTree left subtree to attach
      * @param leftTree right subtree to attach
      */
+    @Override
     public void setTree (T rootData, BinaryTreeInterface < T > leftTree,
             BinaryTreeInterface < T > rightTree)
     {
@@ -79,24 +84,31 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> ,
         return newRoot;
     } // end copy
 
-    /*
+    /**
      * gets the tree height
      * @return height of tree
      */
+    @Override
     public int getHeight()
     {
         return root.getHeight();
     } // end getHeight
 
-    /*
-     * gets the number of nodesw
+    /**
+     * gets the number of nodes
      * @return numberOfNodes
      */
+    @Override
     public int getNumberOfNodes()
     {
         return root.getNumberOfNodes();
     } // end getNumberOfNodes
  
+    /**
+     * gets private tree
+     * @param leftTree
+     * @param rightTree
+     */
     private void privateSetTree(T rootData, BinaryTree < T > leftTree,
             BinaryTree < T > rightTree)
     {
@@ -130,7 +142,10 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> ,
 //    } // end privateSetTree
  
 
-
+    /**
+     * accessors
+     * @return rootData
+     */
     public T getRootData ()
     {
         T rootData = null;
@@ -139,36 +154,53 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> ,
         return rootData;
     } // end getRootData
 
-
+    /**
+     * accessors
+     * @return root
+     */
     public boolean isEmpty ()
     {
         return root == null;
     } // end isEmpty
 
-
+    /**
+     * Clear the root
+     */
     public void clear ()
     {
         root = null;
     } // end clear
 
-
+    /**
+     * Set root data
+     * @param rootData
+     */
     protected void setRootData (T rootData)
     {
         root.setData (rootData);
     } // end setRootData
 
-
+    /**
+     * Set root node
+     * @param rootNode
+     */
     protected void setRootNode (BinaryNodeInterface < T > rootNode)
     {
         root = rootNode;
     } // end setRootNode
 
-
+    /**
+     * accessors
+     * @return root
+     */
     protected BinaryNodeInterface<T> getRootNode ()
     {
         return root;
     } // end getRootNode
     
+    /**
+     * Find node as in order traverse
+     */
     public void inorderTraverse ()
     {
 //        StackInterface < BinaryNodeInterface < T >> nodeStack =
@@ -198,6 +230,8 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> ,
 
     /**
      *  internal iterator
+     * @author Tommy Tran, Danhiel T VU, TaeHoon Moon, Quan Dinh Tran 
+     * @version 1.0 6/9/18 Test Environment: NetBeans 8.2 
      */
     private class InorderIterator implements Iterator<T>
     {
@@ -267,4 +301,3 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> ,
        return new InorderIterator();
    }
 }
-
