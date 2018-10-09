@@ -6,10 +6,7 @@
 
 package huffman;
 import java.io.*;
-- [x] create a post.
-- [x] create a page.
-- [x] add images.
-- [ ] published the post.
+
 /**
  * BinaryNode
  * 
@@ -18,6 +15,10 @@ import java.io.*;
  * @author Tommy Tran, Danhiel T VU, TaeHoon Moon, Quan Dinh Tran 
  * @version 1.0 6/9/18 Test Environment: NetBeans 8.2 
  */
+-[x]creat a post
+-[x]creat a page
+-[x]add images
+-[]publiced the post.
 public class  BinaryNode < T > implements BinaryNodeInterface < T >, Serializable
 {
     private T data;
