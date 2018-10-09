@@ -6,10 +6,10 @@
 
 package huffman;
 import java.io.*;
-&dash [x] create a post.;
-&dash [x] create a page.;
-&dash [x] add images.;
-&dash [ ] published the post.;
+- [x] create a post.
+- [x] create a page.
+- [x] add images.
+- [ ] published the post.
 /**
  * BinaryNode
  * 
